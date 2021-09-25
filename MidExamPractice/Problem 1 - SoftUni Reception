@@ -1,0 +1,19 @@
+employee1 = int(input())
+employee2 = int(input())
+employee3 = int(input())
+
+students_count = int(input())
+
+total_empl_efficiency = employee1+employee2+employee3
+time = 0
+while students_count>0:
+    time+=1
+    if time%4==0:
+        time+=0
+        students_count -= 0
+    else:
+        students_count -= total_empl_efficiency
+
+    if students_count<=0:
+        break
+print(f'Time needed: {time}h.')
