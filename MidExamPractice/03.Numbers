@@ -1,0 +1,21 @@
+numbers = [int(x) for x in input().split()]
+
+
+def avg(list):
+    return sum(list) / len(list)
+
+
+average_numbers = avg(numbers)
+# print(avg(numbers))
+new_list=[]
+
+for index, value in enumerate(numbers):
+    if value > average_numbers:
+        new_list.append(value)
+
+
+new_list = sorted(new_list, reverse=True)
+if new_list:
+    print(*new_list[:5], sep=" ")
+else:
+    print("No")
