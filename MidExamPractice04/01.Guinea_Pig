@@ -1,0 +1,25 @@
+quantity_of_food = float(input()) * 1000
+quantity_of_hay = float(input()) * 1000
+quantity_of_cover = float(input()) * 1000
+weigth_of_pig = float(input()) * 1000
+
+days = 1
+enough_supplies = True
+while days <= 30:
+    quantity_of_food -= 300
+    if days % 2 == 0:
+        quantity_of_hay -= (0.05 * quantity_of_food)
+        # if days % 3 == 0:
+        #     quantity_of_cover -= (weigth_of_pig / 3)
+    if days % 3 == 0:
+        quantity_of_cover -= (weigth_of_pig / 3)
+
+    if quantity_of_food <= 0 or quantity_of_hay <= 0 or quantity_of_cover <=0:
+        enough_supplies = False
+        break
+    days += 1
+
+if enough_supplies:
+    print(f"Everything is fine! Puppy is happy! Food: {quantity_of_food/1000:.2f}, Hay: {quantity_of_hay/1000:.2f}, Cover: {quantity_of_cover/1000:.2f}.")
+else:
+    print(f"Merry must go to the pet store!")
