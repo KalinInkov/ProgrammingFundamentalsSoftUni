@@ -1,0 +1,15 @@
+data = [int(x) for x in input().split()]
+
+while True:
+    command = input()
+    if command=="end":
+        break
+    current_command = command.split()
+    if current_command[0] == "swap":
+        data[int(current_command[1])], data[int(current_command[2])] =data[int(current_command[2])], data[int(current_command[1])]
+    elif current_command[0] == "multiply":
+        data[int(current_command[1])]*=data[int(current_command[2])]
+    elif current_command[0] == "decrease":
+        data = [(x-1) for x in data]
+print(*data, sep=', ')
+
