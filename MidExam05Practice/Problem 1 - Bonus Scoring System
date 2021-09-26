@@ -1,0 +1,23 @@
+from math import ceil
+number_of_students = int(input())
+number_of_lectures = int(input())
+the_initial_bonus = int(input())
+attendance_list = []# Броят на тези е колкото броя на студентите
+
+
+if number_of_students==0:
+    print(f'Max bonus ')
+    print(f'The student has attended 0 lectures.')
+
+else:
+
+    for el in range(number_of_students):
+        at = int(input())
+        attendance_list.append(at)
+
+print(f'Max Bonus: {ceil((max(attendance_list) / number_of_lectures) * (5 + the_initial_bonus))}.')
+print(f'The student has attended {max(attendance_list)} lectures.')
+
+
+
+
