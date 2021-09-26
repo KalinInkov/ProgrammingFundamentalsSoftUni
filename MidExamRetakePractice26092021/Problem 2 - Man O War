@@ -1,0 +1,82 @@
+import sys
+from io import StringIO
+
+test_input1 = """12>13>11>20>66
+12>22>33>44>55>32>18
+70
+Fire 2 11
+Fire 8 100
+Defend 3 6 11
+Defend 0 3 5
+Repair 1 33
+Status
+Retire
+"""
+test_input2 = """2>3>4>5>2
+6>7>8>9>10>11
+20
+Status
+Fire 2 3
+Defend 0 4 11
+Repair 3 18
+Retire
+"""
+
+#sys.stdin = StringIO(test_input1)
+sys.stdin = StringIO(test_input2)
+
+status_pirate_ship = [int(x) for x in input().split(">")]
+status_war_ship = [int(x) for x in input().split(">")]
+max_health_capacity = int(input())
+is_lost=False
+is_sunken = False
+
+while True:
+    command = input()
+    if command=="Retire":
+        break
+    current_command = command.split()
+    if current_command[0]=="Fire":
+        if 0<=int(current_command[1])<len(status_war_ship):
+            status_war_ship[int(current_command[1])]-=int(current_command[2])
+            if status_war_ship[int(current_command[1])]<=0:
+                print(f"You won! The enemy ship has sunken.")
+                is_sunken=False
+                break
+        if is_sunken:
+            break
+    elif current_command[0]=="Defend":
+        if 0<=int(current_command[1]) < len(status_pirate_ship) and 0<=int(current_command[2]) < len(status_pirate_ship):
+
+            beg_ll = status_pirate_ship[:int(current_command[1])]
+            mod_ll = status_pirate_ship[int(current_command[1]):int(current_command[2]) + 1]
+            fin_ll = status_pirate_ship[int(current_command[2]) + 1:]
+            for el in range(len(mod_ll)):
+                mod_ll[el] -= int(current_command[3])
+            status_pirate_ship = beg_ll + mod_ll + fin_ll
+            for el in range(len(status_pirate_ship)):
+                if status_pirate_ship[el]<=0:
+                    is_lost=True
+        else:
+            continue
+        if is_lost:
+            print(f"You lost! The pirate ship has sunken.")
+            break
+    elif current_command[0]=="Repair":
+        if int(current_command[1]) <= len(status_pirate_ship) - 1:
+            status_pirate_ship[int(current_command[1])]+=int(current_command[2])
+            if status_pirate_ship[int(current_command[1])]>=max_health_capacity:
+                status_pirate_ship[int(current_command[1])]=70
+        else:
+            continue
+
+    elif current_command[0]=="Status":
+        limit_repair = 0.20*max_health_capacity
+        count_to_repair = 0
+        for el in range(len(status_pirate_ship)):
+            if status_pirate_ship[el]<limit_repair:
+                count_to_repair+=1
+        print(f"{count_to_repair} sections need repair.")
+if not is_lost:
+    print(f"Pirate ship status: {sum(status_pirate_ship)}")
+    print(f"Warship status: {sum(status_war_ship)}")
