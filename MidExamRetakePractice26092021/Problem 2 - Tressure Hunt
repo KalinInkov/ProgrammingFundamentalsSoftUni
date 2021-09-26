@@ -1,0 +1,62 @@
+import sys
+from io import StringIO
+
+test_input1 = """Gold|Silver|Bronze|Medallion|Cup
+Loot Wood Gold Coins
+Loot Silver Pistol
+Drop 3
+Steal 3
+Yohoho!
+"""
+test_input2 = """Diamonds|Silver|Shotgun|Gold
+Loot Silver Medals Coal
+Drop -1
+Drop 1
+Steal 6
+Yohoho!
+"""
+
+sys.stdin = StringIO(test_input1)
+#sys.stdin = StringIO(test_input2)
+
+chest = input().split("|")
+command = input()
+
+while not command=="Yohoho!":
+    current_command = command.split()
+    if current_command[0]=="Loot":
+        loot_n= current_command[1:]
+        for el in  range(len(loot_n)):
+            if loot_n[el] in chest:
+                continue
+            else:
+                chest.insert(0,loot_n[el])
+    elif current_command[0]=="Drop":
+        if int(current_command[1])>len(chest)-1:
+            continue
+        else:
+            item_to_move = chest[int(current_command[1])]
+            chest.append(item_to_move)
+            chest.pop(int(current_command[1]))
+
+    elif current_command[0]=="Steal":
+        last_count = int(current_command[1])
+        if last_count>=len(chest):
+            print(*chest, sep=", ")
+            chest.clear()
+        else:
+            print(*chest[len(chest)-last_count:], sep=", ")
+            chest=chest[:len(chest)-last_count]
+
+    command = input()
+
+lenght_el = 0
+
+if len(chest)>0:
+    for el in range(len(chest)):
+        lenght_el+=int(len(chest[el]))
+    print(f"Average treasure gain: {lenght_el/len(chest):.2f} pirate credits.")
+else:
+    print("Failed treasure hunt.")
+
+
