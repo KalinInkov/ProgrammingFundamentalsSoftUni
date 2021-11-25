@@ -1,0 +1,60 @@
+import sys
+from io import StringIO
+
+test_input1 = """zzHe
+ChangeAll|z|l
+Insert|2|o
+Move|3
+Decode
+"""
+test_input2 = """owyouh
+Move|2
+Move|3
+Insert|3|are
+Insert|9|?
+Decode
+"""
+
+
+def move(text, number_of_letters):
+    text_to_move = text[:int(number_of_letters)]
+    text = text[int(number_of_letters):]
+    new_text = text + text_to_move
+    return new_text
+
+
+def insert(text, current_index, value):
+    if int(current_index)<=len(text):
+        text = text[:int(current_index)] + str(value) + text[int(current_index):]
+    return text
+
+
+def change_all(text, substring, replacement):
+    new_text = ""
+    for el in text:
+        if el==substring:
+            el = replacement
+        new_text+=el
+    return new_text
+
+
+
+#sys.stdin = StringIO(test_input1)
+#sys.stdin = StringIO(test_input2)
+
+message = input()
+command = input()
+while not command == "Decode":
+    current_command = command.split('|')
+    if current_command[0] == "Move":
+        message = move(message, int(current_command[1]))
+    elif current_command[0] == "Insert":
+        message = insert(message, int(current_command[1]), current_command[2])
+    elif current_command[0] == "ChangeAll":
+        message = change_all(message, current_command[1], current_command[2])
+
+    command = input()
+
+print(f"The decrypted message is: {message}")
+
+
