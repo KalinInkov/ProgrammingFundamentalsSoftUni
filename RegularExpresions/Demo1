@@ -1,0 +1,16 @@
+
+t= "Hello there some nums 1234.That is all"
+
+index = 0
+num=""
+while index<len(t):
+    if t[index].isdigit():
+        while t[index].isdigit():
+            num+=t[index]
+            index+=1
+        num = int(num)
+    index+=1
+
+print(num)
+print("That is  demo!!!")
+print("============")
