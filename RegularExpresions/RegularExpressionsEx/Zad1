@@ -1,0 +1,33 @@
+import sys
+from io import StringIO
+import re
+
+test_input1 = """123a456
+789b987
+654c321
+0
+"""
+test_input2 = """The300
+What is that?
+I think it's the 3rd movie 
+Lets watch it at 22:45
+"""
+
+test_input3 = """Let's go11!!!11!
+Okey!1!
+"""
+
+# sys.stdin = StringIO(test_input1)
+# #sys.stdin = StringIO(test_input2)
+# # sys.stdin = StringIO(test_input3)
+
+pattern = r"\d+"
+text=input()
+nums= []
+
+while not  text=="" :
+    valid_numbers = re.findall(pattern, text)
+    nums.extend(valid_numbers)
+    text = input()
+
+print(*nums)
